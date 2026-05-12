@@ -59,7 +59,7 @@ class ConexionDB {
 
     private function __clone() {}
 
-    public function __wakeup(): void {
+    public function __wakeup(): never {
         throw new \Exception('No se puede deserializar la conexión.');
     }
 }

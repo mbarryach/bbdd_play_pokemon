@@ -57,9 +57,16 @@ class ConexionDB {
         return $this->conexion;
     }
 
+    // __clone puede ser private: no es un magic method de PHP externo.
     private function __clone() {}
 
+    // __wakeup DEBE ser public en PHP 8.1+ (magic method contract).
+    // Se protege lanzando excepción, no con visibilidad privada.
+    // 'never' (PHP 8.1+) indica que siempre lanza excepción, nunca retorna.
     public function __wakeup(): never {
-        throw new \Exception('No se puede deserializar la conexión.');
+        throw new \Exception(
+            'ConexionDB no puede deserializarse. ' .
+            'Usa ConexionDB::getInstancia() para obtener la conexión.'
+        );
     }
 }

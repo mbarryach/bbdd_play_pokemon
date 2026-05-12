@@ -33,6 +33,9 @@ define('APP_URL',     'http://localhost/competencia');
 // ── Rutas absolutas ────────────────────────────────────
 define('BASE_PATH',   __DIR__);
 define('CLASES_PATH', BASE_PATH . '/clases');
+define('MODELS_PATH', BASE_PATH . '/models');
+define('CTRL_PATH',   BASE_PATH . '/controllers');
+define('VIEWS_PATH',  BASE_PATH . '/views');
 define('ADMIN_PATH',  BASE_PATH . '/admin');
 define('INC_PATH',    BASE_PATH . '/includes');
 
@@ -55,10 +58,18 @@ if (DEBUG_MODE) {
 // ── Zona horaria ───────────────────────────────────────
 date_default_timezone_set('Europe/Madrid');
 
-// ── Autoload de clases ─────────────────────────────────
+// ── Autoload: clases, modelos y controladores ──────────
+// Busca en /clases, /models y /controllers automáticamente.
 spl_autoload_register(function (string $clase): void {
-    $archivo = CLASES_PATH . '/' . $clase . '.php';
-    if (file_exists($archivo)) {
-        require_once $archivo;
+    $rutas = [
+        CLASES_PATH . '/' . $clase . '.php',
+        MODELS_PATH . '/' . $clase . '.php',
+        CTRL_PATH   . '/' . $clase . '.php',
+    ];
+    foreach ($rutas as $archivo) {
+        if (file_exists($archivo)) {
+            require_once $archivo;
+            return;
+        }
     }
 });

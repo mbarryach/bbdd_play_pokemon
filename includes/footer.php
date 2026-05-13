@@ -1,4 +1,4 @@
-    <?php // includes/footer.php ?>
+<?php // includes/footer.php ?>
 </div><!-- /.container -->
 </main>
 

@@ -5,6 +5,11 @@
 require_once __DIR__ . '/../config.php';
 Auth::requerirLogin();
 
+if (!Auth::tieneRol([ROL_ADMIN])) {
+    header('Location: ' . APP_URL . '/index.php?msg=sin_permiso');
+    exit;
+}
+
 $paginaAdmin = 'dashboard';
 $rol = Auth::getRol();
 $pdo = ConexionDB::getInstancia()->getConexion();

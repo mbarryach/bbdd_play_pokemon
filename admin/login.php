@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario === '' || $password === '') {
         $error = 'Usuario y contraseña son obligatorios.';
     } elseif (Auth::login($usuario, $password)) {
-        header('Location: ' . APP_URL . '/admin/dashboard.php');
+        header('Location: ' . APP_URL . '/index.php');
         exit;
     } else {
         $error = 'Credenciales incorrectas. Inténtalo de nuevo.';

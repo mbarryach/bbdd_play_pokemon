@@ -5,6 +5,7 @@ if (!defined('APP_NAME')) {
 }
 $paginaActiva = $paginaActiva ?? '';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +26,21 @@ $paginaActiva = $paginaActiva ?? '';
         <li><a href="<?= APP_URL ?>/index.php"           class="<?= $paginaActiva === 'inicio'         ? 'active' : '' ?>">Inicio</a></li>
         <li><a href="<?= APP_URL ?>/clasificacion.php"   class="<?= $paginaActiva === 'clasificacion'  ? 'active' : '' ?>">Clasificación</a></li>
         <li><a href="<?= APP_URL ?>/resultados.php"      class="<?= $paginaActiva === 'resultados'     ? 'active' : '' ?>">Resultados</a></li>
-        <li><a href="<?= APP_URL ?>/equipos.php"         class="<?= $paginaActiva === 'equipos'        ? 'active' : '' ?>">Equipos</a></li>
+<!-- BOTÓN USUARIO -->
+        <li class="user-menu">
+            <button class="user-btn" onclick="document.getElementById('dropdown-user').classList.toggle('show')">
+                👤 <?= htmlspecialchars(Auth::getUsuario()) ?> (<?= Auth::getLabelRol() ?>) ▾
+            </button>
+
+            <div id="dropdown-user" class="user-dropdown">
+                <div class="user-info">
+                    <strong><?= htmlspecialchars(Auth::getUsuario()) ?></strong>
+                    <span><?= Auth::getLabelRol() ?></span>
+                </div>
+
+                <a href="<?= APP_URL ?>/admin/logout.php" class="logout-btn">Cerrar sesión</a>
+            </div>
+        </li>
     </ul>
 </nav>
 

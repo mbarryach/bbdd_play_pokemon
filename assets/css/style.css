@@ -80,6 +80,56 @@ a { color: inherit; text-decoration: none; }
     color: var(--blanco);
 }
 
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    background: #7c5cfc;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 120%;
+    background: #1a1a2a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 180px;
+    z-index: 999;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-info {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #eee;
+}
+
+.user-info span {
+    display: block;
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+.logout-btn {
+    display: block;
+    text-align: center;
+    background: #ff4d6d;
+    color: white;
+    text-decoration: none;
+}
 /* ── Main / footer ──────────────────────────────────────── */
 main { flex: 1; }
 
@@ -199,6 +249,7 @@ footer a:hover { color: var(--blanco); }
     font-weight: 700;
     letter-spacing: .1em;
 }
+
 
 /* ── Animación fade ─────────────────────────────────────── */
 .fade-in {

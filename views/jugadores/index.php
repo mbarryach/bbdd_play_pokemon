@@ -1,4 +1,8 @@
-<?php include INC_PATH . '/header.php'; ?>
+<?php
+require_once __DIR__ . '/../../config.php';
+
+include INC_PATH . '/header.php';
+?>
 
 <div class="page-header">
     <div>

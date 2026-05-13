@@ -8,7 +8,7 @@ try {
     $pdo  = ConexionDB::getInstancia()->getConexion();
 
     // Verificar si ya existe
-    $check = $pdo->prepare('SELECT id FROM usuarios_admin WHERE usuario = ?');
+    $check = $pdo->prepare('SELECT id FROM usuarios WHERE usuario = ?');
     $check->execute([$usuario]);
 
     if ($check->fetch()) {
@@ -16,7 +16,7 @@ try {
     } else {
         $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
         $stmt = $pdo->prepare(
-            'INSERT INTO usuarios_admin (usuario, password) VALUES (?, ?)'
+            'INSERT INTO usuarios (usuario, password) VALUES (?, ?)'
         );
         $stmt->execute([$usuario, $hash]);
         echo '✅ Admin creado correctamente.<br>';

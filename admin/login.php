@@ -196,7 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-control::placeholder { color: rgba(176,176,200,.4); }
 
         /* ── Botón ── */
-        .btn-login {
+        .btn-login,
+        .btn-register {
             width: 100%;
             padding: .85rem;
             background: linear-gradient(135deg, var(--purpura), #5a3fd8);
@@ -212,12 +213,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: .5rem;
         }
 
-        .btn-login:hover {
+        .btn-login:hover,
+        .btn-register:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(124,92,252,.4);
         }
 
-        .btn-login:active { transform: translateY(0); }
+        .btn-login:active,
+        .btn-register:active {
+            transform: translateY(0);
+        }
 
         /* ── Roles info ── */
         .roles-hint {
@@ -316,7 +321,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <button type="submit" class="btn-login">ENTRAR →</button>
-        </form>
+            </form>
+
+            <a href="../registro.php" class="btn-register">REGISTRARSE →</a>
 
         <div class="roles-hint">
             <p>NIVELES DE ACCESO</p>

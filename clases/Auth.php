@@ -99,11 +99,11 @@ class Auth {
             return false;
         }
 
-        // Conexión de autenticación (usuario root, solo lee usuarios_admin)
+        // Conexión de autenticación (usuario root, solo lee usuarios)
         $pdo  = ConexionDB::getInstancia('auth')->getConexion();
         $stmt = $pdo->prepare(
             'SELECT id, usuario, password, rol
-             FROM   usuarios_admin
+             FROM   usuarios
              WHERE  usuario = ? AND activo = 1
              LIMIT  1'
         );

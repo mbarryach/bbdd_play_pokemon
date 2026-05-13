@@ -16,7 +16,7 @@ class UsuarioModel {
     private PDO $pdo;
 
     public function __construct() {
-        // Siempre usamos 'auth' para leer/escribir usuarios_admin
+        // Siempre usamos 'auth' para leer/escribir usuarios
         $this->pdo = ConexionDB::getInstancia('auth')->getConexion();
     }
 
@@ -31,7 +31,7 @@ class UsuarioModel {
         $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
         $stmt = $this->pdo->prepare(
-            'INSERT INTO usuarios_admin (usuario, password, rol, activo)
+            'INSERT INTO usuarios (usuario, password, rol, activo)
              VALUES (?, ?, \'consulta\', 1)'
         );
 
@@ -53,7 +53,7 @@ class UsuarioModel {
 
         $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
         $stmt = $this->pdo->prepare(
-            'INSERT INTO usuarios_admin (usuario, password, rol, activo)
+            'INSERT INTO usuarios (usuario, password, rol, activo)
              VALUES (?, ?, ?, 1)'
         );
         return $stmt->execute([trim($usuario), $hash, $rol]);
@@ -63,7 +63,7 @@ class UsuarioModel {
     public function cambiarPassword(int $id, string $nuevaPassword): bool {
         $hash = password_hash($nuevaPassword, PASSWORD_BCRYPT, ['cost' => 12]);
         $stmt = $this->pdo->prepare(
-            'UPDATE usuarios_admin SET password = ? WHERE id = ?'
+            'UPDATE usuarios SET password = ? WHERE id = ?'
         );
         return $stmt->execute([$hash, $id]);
     }
@@ -71,7 +71,7 @@ class UsuarioModel {
     // ── Activar / desactivar usuario (admin) ───────────
     public function setActivo(int $id, bool $activo): bool {
         $stmt = $this->pdo->prepare(
-            'UPDATE usuarios_admin SET activo = ? WHERE id = ?'
+            'UPDATE usuarios SET activo = ? WHERE id = ?'
         );
         return $stmt->execute([(int)$activo, $id]);
     }
@@ -80,7 +80,7 @@ class UsuarioModel {
     public function obtenerTodos(): array {
         return $this->pdo->query(
             'SELECT id, usuario, rol, activo, created_at
-             FROM   usuarios_admin
+             FROM   usuarios
              ORDER  BY created_at DESC'
         )->fetchAll();
     }
@@ -88,7 +88,7 @@ class UsuarioModel {
     // ── Comprobar si un nombre de usuario ya existe ─────
     public function existeUsuario(string $usuario): bool {
         $stmt = $this->pdo->prepare(
-            'SELECT COUNT(*) FROM usuarios_admin WHERE usuario = ?'
+            'SELECT COUNT(*) FROM usuarios WHERE usuario = ?'
         );
         $stmt->execute([trim($usuario)]);
         return (int) $stmt->fetchColumn() > 0;
@@ -97,7 +97,7 @@ class UsuarioModel {
     // ── Eliminar usuario (admin) ────────────────────────
     public function eliminar(int $id): bool {
         $stmt = $this->pdo->prepare(
-            'DELETE FROM usuarios_admin WHERE id = ?'
+            'DELETE FROM usuarios WHERE id = ?'
         );
         return $stmt->execute([$id]);
     }

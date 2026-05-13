@@ -16,7 +16,7 @@ define('DB_CREDENTIALS', [
     'admin'    => ['user' => 'admin_torneo', 'pass' => 'Admin_TCG_2024!'],
     'arbitro'  => ['user' => 'arbitro',      'pass' => 'Arbitro_TCG_2024!'],
     'consulta' => ['user' => 'consulta',     'pass' => 'Consulta_TCG_2024!'],
-    // Fallback para la tabla de autenticación (solo lee usuarios_admin)
+    // Fallback para la tabla de autenticación (solo lee usuarios)
     'auth'     => ['user' => 'root',         'pass' => ''],
 ]);
 
@@ -28,7 +28,7 @@ define('ROL_CONSULTA', 'consulta');
 // ── Aplicación ─────────────────────────────────────────
 define('APP_NAME',    'Liga Pokémon');
 define('APP_VERSION', '1.0.0');
-define('APP_URL',     'http://localhost/competencia');
+define('APP_URL',     'http://localhost/bbdd_play_pokemon');
 
 // ── Rutas absolutas ────────────────────────────────────
 define('BASE_PATH',   __DIR__);

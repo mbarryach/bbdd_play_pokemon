@@ -117,7 +117,7 @@ include INC_PATH . '/header.php';
 </div>
 
 <div class="home-ctas">
-    <a href="<?= APP_URL ?>/clasificacion.php" class="cta-btn">Ver clasificación →</a>
+    <a href="<?= APP_URL ?>/views/clasification/index.php" class="cta-btn">Ver clasificación →</a>
     <a href="<?= APP_URL ?>/torneos.php"       class="cta-btn cta-ghost">Ver torneos</a>
 </div>
 

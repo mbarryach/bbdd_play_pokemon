@@ -1,9 +1,8 @@
 <?php
-// controllers/ClasificacionController.php
 class ClasificacionController {
 
     private ClasificacionModel $modelClasif;
-    private TorneoModel        $modelTorneo;
+    private TorneoModel $modelTorneo;
 
     public function __construct() {
         $this->modelClasif = new ClasificacionModel();
@@ -11,20 +10,29 @@ class ClasificacionController {
     }
 
     public function index(): void {
-        $torneos  = $this->modelTorneo->obtenerLista();
-        $torneoId = (int)($_GET['torneo'] ?? 0);
 
-        if ($torneoId === 0) {
-            $activo   = $this->modelTorneo->obtenerActivo();
-            $torneoId = $activo ? (int)$activo['ID_Torneo'] : 0;
+        $torneos = $this->modelTorneo->obtenerLista();
+
+        echo "<pre>";
+        var_dump($torneos);
+        echo "</pre>";
+
+        $torneoId = isset($_GET['torneo']) ? (int)$_GET['torneo'] : 0;
+
+        $torneoActual = null;
+        $tabla = [];
+        
+        if ($torneoId > 0) {
+            $torneoActual = $this->modelTorneo->obtenerPorId($torneoId);
+            $tabla = $this->modelClasif->obtenerPorTorneo($torneoId);
         }
-
-        $torneoActual = $torneoId > 0 ? $this->modelTorneo->obtenerPorId($torneoId) : null;
-        $tabla        = $torneoId > 0 ? $this->modelClasif->obtenerPorTorneo($torneoId) : [];
-
-        $tituloPagina = 'Clasificación — ' . APP_NAME;
-        $paginaActiva = 'clasificacion';
-
-        include BASE_PATH . '/views/clasificacion/index.php';
     }
+    public function getTorneos(): array {
+        return $this->modelTorneo->obtenerLista();
+    }
+    
+    public function getClasificacionByTorneo(int $torneoId): array {
+        return $this->modelClasif->obtenerPorTorneo($torneoId);
+    }
+
 }

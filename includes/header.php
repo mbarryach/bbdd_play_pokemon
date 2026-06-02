@@ -24,7 +24,7 @@ $paginaActiva = $paginaActiva ?? '';
     </a>
     <ul class="nav-links">
         <li><a href="<?= APP_URL ?>/index.php"           class="<?= $paginaActiva === 'inicio'         ? 'active' : '' ?>">Inicio</a></li>
-        <li><a href="<?= APP_URL ?>/clasificacion.php"   class="<?= $paginaActiva === 'clasificacion'  ? 'active' : '' ?>">Clasificación</a></li>
+        <li><a href="<?= APP_URL ?>/views/clasification/index.php"   class="<?= $paginaActiva === 'clasificacion'  ? 'active' : '' ?>">Clasificación</a></li>
         <li><a href="<?= APP_URL ?>/resultados.php"      class="<?= $paginaActiva === 'resultados'     ? 'active' : '' ?>">Resultados</a></li>
 <!-- BOTÓN USUARIO -->
         <li class="user-menu">
@@ -43,6 +43,5 @@ $paginaActiva = $paginaActiva ?? '';
         </li>
     </ul>
 </nav>
+</body>
 
-<main>
-<div class="container">

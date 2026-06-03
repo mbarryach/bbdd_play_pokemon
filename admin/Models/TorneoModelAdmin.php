@@ -1,5 +1,5 @@
 <?php
-class TorneoModel {
+class TorneoModelAdmin {
     private PDO $pdo;
 
     public function __construct() {

@@ -1,8 +1,8 @@
 <?php
-include '../../includes/header.php'; 
-require_once '../../controllers/TorneoController.php';
+include '../../../includes/header.php'; 
+require_once '../../controllers/TorneoControllerAdmin.php';
 
-$controller = new TorneoController();
+$controller = new TorneoControllerAdmin();
 $torneos = $controller->index();
 ?>
 
@@ -230,4 +230,4 @@ $torneos = $controller->index();
 
 </style>
 
-<?php include '../../includes/footer.php'; ?>
+<?php include '../../../includes/footer.php'; ?>

@@ -15,6 +15,7 @@ $paginaActiva = $paginaActiva ?? '';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= APP_URL ?>../assets/css/style.css">
+    
 </head>
 <body>
 

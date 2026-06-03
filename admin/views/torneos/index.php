@@ -1,9 +1,39 @@
 <?php
-include '../../../includes/header.php'; 
 require_once '../../controllers/TorneoControllerAdmin.php';
 
 $controller = new TorneoControllerAdmin();
+
+// Crear torneo
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear'])) {
+    $datos = [
+        'Nombre' => $_POST['Nombre'],
+        'Tipo_Torneo' => $_POST['Tipo_Torneo'],
+        'fecha_inicio' => $_POST['fecha_inicio'],
+        'fecha_fin' => $_POST['fecha_fin'],
+        'Ubicacion' => $_POST['Ubicacion'],
+        'Pais' => $_POST['Pais'],
+        'Num_Rondas_Suizas' => (int)$_POST['Num_Rondas_Suizas'],
+        'Tamanio_Top_Cut' => (int)$_POST['Tamanio_Top_Cut'],
+        'ID_Temporada' => (int)$_POST['ID_Temporada']
+    ];
+    $controller->crear($datos);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Eliminar torneo
+if (isset($_GET['eliminar'])) {
+    $id = (int)$_GET['eliminar'];
+    if ($id > 0) {
+        $controller->eliminar($id);
+    }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
 $torneos = $controller->index();
+$temporadas = $controller->getTemporadas();  // ← Aquí obtenemos las temporadas
+
+include '../../../includes/header.php';
 ?>
 
 <div class="page">
@@ -11,6 +41,51 @@ $torneos = $controller->index();
     <div class="page-header">
         <h1 class="page-title">Torneos</h1>
         <p class="page-subtitle">Gestión de competiciones registradas</p>
+    </div>
+
+    <div class="card">
+
+        <button id="btnMostrarForm" class="btn-primary">
+            + Nuevo torneo
+        </button>
+
+        <div id="formCrear" style="display:none; margin-top:1rem;">
+
+            <form method="POST" class="form-grid">
+
+                <input type="text" name="nombre" placeholder="Nombre" required>
+
+                <select name="Tipo_Torneo" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="Regional">Regional</option>
+                    <option value="League Cup">League Cup</option>
+                    <option value="Internacional">Internacional</option>
+                </select>
+
+                <input type="date" name="fecha_inicio" required>
+                <input type="date" name="fecha_fin" required>
+
+                <input type="text" name="Ubicacion" placeholder="Ubicación">
+                <input type="text" name="Pais" placeholder="País" required>
+
+                <input type="number" name="Num_Rondas_Suizas" placeholder="Rondas suizas" min="0">
+                <input type="number" name="Tamanio_Top_Cut" placeholder="Top Cut" min="0">
+
+                <select name="ID_Temporada" required>
+                    <option value="">-- Selecciona temporada --</option>
+                    <?php foreach ($temporadas as $temp): ?>
+                        <option value="<?= $temp['ID_Temporada'] ?>"><?= htmlspecialchars($temp['ID_Temporada']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <button type="submit" name="crear" class="btn-success">
+                    Guardar torneo
+                </button>
+
+            </form>
+
+        </div>
+
     </div>
 
     <?php if (empty($torneos)): ?>
@@ -29,10 +104,15 @@ $torneos = $controller->index();
                 <thead>
                     <tr>
                         <th>Torneo</th>
+                        <th>Tipo</th>
                         <th>Inicio</th>
                         <th>Fin</th>
                         <th>Ubicación</th>
                         <th>País</th>
+                        <th>Rondas</th>
+                        <th>Top Cut</th>
+                        <th>Temp</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -46,25 +126,32 @@ $torneos = $controller->index();
                         </td>
 
                         <td>
-                            <span class="badge badge-green">
-                                <?= date('d/m/Y', strtotime($t['fecha_inicio'])) ?>
+                            <span class="badge badge-amarillo">
+                                <?= htmlspecialchars($t['Tipo_Torneo']) ?>
                             </span>
                         </td>
 
-                        <td>
-                            <span class="badge badge-red">
-                                <?= date('d/m/Y', strtotime($t['fecha_fin'])) ?>
-                            </span>
-                        </td>
+                        <td><?= date('d/m/Y', strtotime($t['fecha_inicio'])) ?></td>
+                        <td><?= date('d/m/Y', strtotime($t['fecha_fin'])) ?></td>
 
-                        <td class="td-muted">
-                            <?= htmlspecialchars($t['Ubicacion']) ?>
-                        </td>
+                        <td><?= htmlspecialchars($t['Ubicacion']) ?></td>
 
                         <td>
                             <span class="badge badge-purple">
                                 <?= htmlspecialchars($t['Pais']) ?>
                             </span>
+                        </td>
+
+                        <td><?= $t['Num_Rondas_Suizas'] ?></td>
+                        <td><?= $t['Tamanio_Top_Cut'] ?></td>
+                        <td><?= $t['ID_Temporada'] ?></td>
+
+                        <td>
+                            <a href="?eliminar=<?= $t['ID_Torneo'] ?>"
+                               class="btn-danger"
+                               onclick="return confirm('¿Eliminar torneo?')">
+                                🗑️
+                            </a>
                         </td>
 
                     </tr>
@@ -82,152 +169,143 @@ $torneos = $controller->index();
 
 <style>
 
-/* ─────────────────────────────────────────────
-   PAGE
-───────────────────────────────────────────── */
-
-.page {
-    padding: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
+.page{
+    padding:1.5rem;
+    width:min(1400px, 100% - 3rem);
+    margin:0 auto;
 }
 
-.page-header {
-    margin-bottom: 1.5rem;
+.page-title{
+    font-size:1.4rem;
+    font-weight:900;
+    color:var(--blanco);
 }
 
-.page-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 900;
-    color: var(--blanco);
+.page-subtitle{
+    font-size:.85rem;
+    color:var(--texto);
+    margin-bottom:1rem;
 }
 
-.page-subtitle {
-    font-size: .85rem;
-    color: var(--texto);
-    margin-top: .25rem;
+.card{
+    background:linear-gradient(145deg,#0f0f1c,#0c0c18);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:1rem;
+    margin-bottom:1.5rem;
 }
 
-/* ─────────────────────────────────────────────
-   TABLE WRAPPER (premium style unificado)
-───────────────────────────────────────────── */
-
-.table-wrapper {
-    background: linear-gradient(145deg, #0f0f1c, #0c0c18);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 10px 35px rgba(0,0,0,.35);
+/* FORM */
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:10px;
 }
 
-/* ─────────────────────────────────────────────
-   TABLE
-───────────────────────────────────────────── */
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
+.form-grid input,
+.form-grid select{
+    padding:8px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,0.03);
+    color:white;
 }
 
-.data-table thead {
-    background: rgba(255,255,255,.03);
+/* BUTTONS */
+.btn-primary{
+    background:var(--purpura);
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
 }
 
-.data-table th {
-    padding: .9rem 1rem;
-    text-align: left;
-    font-size: .65rem;
-    text-transform: uppercase;
-    letter-spacing: .12em;
-    color: var(--texto);
+.btn-success{
+    background:var(--verde);
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
 }
 
-.data-table td {
-    padding: .85rem 1rem;
-    border-top: 1px solid var(--border);
-    color: var(--texto-claro);
-    font-size: .85rem;
+.btn-danger{
+    background:rgba(255,77,109,0.2);
+    padding:6px 8px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-block;
 }
 
-.data-table tbody tr:hover {
-    background: rgba(124,92,252,.06);
+.table-wrapper{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
 }
 
-/* ─────────────────────────────────────────────
-   TEXT STYLES
-───────────────────────────────────────────── */
-
-.td-title {
-    font-weight: 800;
-    color: var(--blanco);
+.data-table{
+    width:100%;
+    border-collapse:collapse;
 }
 
-.td-muted {
-    color: var(--texto);
+.data-table th{
+    text-align:left;
+    padding:.9rem 1rem;
+    font-size:.65rem;
+    text-transform:uppercase;
+    color:var(--texto);
 }
 
-/* ─────────────────────────────────────────────
-   BADGES (consistente sistema global)
-───────────────────────────────────────────── */
-
-.badge {
-    display: inline-flex;
-    padding: .25rem .6rem;
-    border-radius: 999px;
-    font-size: .7rem;
-    font-weight: 800;
+.data-table td{
+    padding:.9rem 1rem;
+    border-top:1px solid var(--border);
+    color:var(--texto-claro);
 }
 
-/* fechas inicio */
-.badge-green {
-    background: rgba(6,214,160,.12);
-    color: var(--verde);
+.data-table tbody tr:hover{
+    background:rgba(124,92,252,0.06);
 }
 
-/* fechas fin */
-.badge-red {
-    background: rgba(255,77,109,.12);
-    color: var(--rojo);
+.empty-state{
+    text-align:center;
+    padding:3rem 1rem;
+    color:var(--texto);
 }
 
-/* país */
-.badge-purple {
-    background: rgba(124,92,252,.12);
-    color: var(--purpura);
-}
-
-/* ─────────────────────────────────────────────
-   EMPTY STATE
-───────────────────────────────────────────── */
-
-.empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--texto);
-}
-
-.empty-icon {
-    font-size: 2.5rem;
-    opacity: .4;
-    margin-bottom: .5rem;
-}
-
-/* ─────────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .table-wrapper {
-        overflow-x: auto;
-    }
-
-    .data-table th,
-    .data-table td {
-        white-space: nowrap;
-    }
+.empty-icon{
+    font-size:2.5rem;
+    opacity:.4;
 }
 
 </style>
+
+<script>
+document.getElementById('btnMostrarForm').addEventListener('click', function () {
+    const form = document.getElementById('formCrear');
+
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        this.textContent = '✖ Cerrar formulario';
+    } else {
+        form.style.display = 'none';
+        this.textContent = '+ Nuevo torneo';
+    }
+});
+
+document.querySelector('select[name="Tipo_Torneo"]').addEventListener('change', function() {
+    const tipo = this.value;
+    const rondas = { 'Regional':8, 'League Cup':5, 'Internacional':9 };
+    const top = { 'Regional':32, 'League Cup':8, 'Internacional':32 };
+    if (rondas[tipo]) {
+        document.querySelector('input[name="Num_Rondas_Suizas"]').value = rondas[tipo];
+        document.querySelector('input[name="Tamanio_Top_Cut"]').value = top[tipo];
+    }
+});
+</script>
+
+
 
 <?php include '../../../includes/footer.php'; ?>

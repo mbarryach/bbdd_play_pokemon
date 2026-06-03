@@ -1,5 +1,7 @@
 <?php
-class TorneoModel {
+require_once '../../../clases/ConexionDB.php';  // ← Línea añadida
+
+class UsuarioModel {
     private PDO $pdo;
 
     public function __construct() {
@@ -8,12 +10,12 @@ class TorneoModel {
 
     public function obtenerTodos(): array {
         $stmt = $this->pdo->query("
-            SELECT nombre, fecha_inicio, fecha_fin, Ubicacion, Pais
-            FROM torneo
-            ORDER BY fecha_inicio DESC
+            SELECT usuario, password, rol, created_at
+            FROM usuarios
+            ORDER BY rol ASC
         ");
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }
 ?>

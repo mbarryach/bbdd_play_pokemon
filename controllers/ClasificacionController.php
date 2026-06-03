@@ -13,10 +13,6 @@ class ClasificacionController {
 
         $torneos = $this->modelTorneo->obtenerLista();
 
-        echo "<pre>";
-        var_dump($torneos);
-        echo "</pre>";
-
         $torneoId = isset($_GET['torneo']) ? (int)$_GET['torneo'] : 0;
 
         $torneoActual = null;

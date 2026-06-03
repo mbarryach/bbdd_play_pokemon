@@ -125,28 +125,28 @@ try {
         <!-- Acciones rápidas según rol -->
         <div class="section-header"><h3 class="section-title">Acciones rápidas</h3></div>
         <div class="quick-actions">
-            <a href="<?= APP_URL ?>/clasificacion.php"  class="action-card">
+            <a href="<?= APP_URL ?>/views/clasification/index.php"  class="action-card">
                 <span class="action-icon">📊</span><span class="action-label">Clasificación</span>
             </a>
-            <a href="<?= APP_URL ?>/jugadores.php" class="action-card">
+            <a href="<?= APP_URL ?>/views/jugadores/index.php" class="action-card">
                 <span class="action-icon">🎴</span><span class="action-label">Jugadores</span>
             </a>
-            <a href="<?= APP_URL ?>/torneos.php"   class="action-card">
+            <a href="<?= APP_URL ?>/views/torneos/index.php"   class="action-card">
                 <span class="action-icon">🏆</span><span class="action-label">Torneos</span>
             </a>
-            <a href="<?= APP_URL ?>/resultados.php" class="action-card">
+            <a href="<?= APP_URL ?>/views/resultados/index.php" class="action-card">
                 <span class="action-icon">⚔️</span><span class="action-label">Resultados</span>
             </a>
             <?php if (Auth::tieneRol([ROL_ADMIN, ROL_ARBITRO])): ?>
-            <a href="<?= APP_URL ?>/admin/torneos.php"   class="action-card">
+            <a href="<?= APP_URL ?>/admin/views/torneos/index.php"   class="action-card">
                 <span class="action-icon">⚙️</span><span class="action-label">Gestionar torneos</span>
             </a>
-            <a href="<?= APP_URL ?>/admin/jugadores.php" class="action-card">
+            <a href="<?= APP_URL ?>/admin/views/jugadores/index.php" class="action-card">
                 <span class="action-icon">📋</span><span class="action-label">Gestionar jugadores</span>
             </a>
             <?php endif; ?>
             <?php if (Auth::esAdmin()): ?>
-            <a href="<?= APP_URL ?>/admin/usuarios.php" class="action-card action-card--admin">
+            <a href="<?= APP_URL ?>/admin/views/usuarios/index.php" class="action-card action-card--admin">
                 <span class="action-icon">👥</span><span class="action-label">Usuarios del sistema</span>
             </a>
             <?php endif; ?>

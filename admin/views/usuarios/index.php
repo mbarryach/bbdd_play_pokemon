@@ -1,23 +1,24 @@
 <?php
-include '../../includes/header.php'; 
-require_once '../../controllers/TorneoController.php';
+require_once '../../controllers/UsuariosControllerAdmin.php';
 
-$controller = new TorneoController();
-$torneos = $controller->index();
+$controller = new UsuarioController();
+$usuarios = $controller->index();
+
+include '../../../includes/header.php';
 ?>
 
 <div class="page">
 
     <div class="page-header">
-        <h1 class="page-title">Torneos</h1>
-        <p class="page-subtitle">Gestión de competiciones registradas</p>
+        <h1 class="page-title">Usuarios</h1>
+        <p class="page-subtitle">Gestión de usuarios del sistema</p>
     </div>
 
-    <?php if (empty($torneos)): ?>
+    <?php if (empty($usuarios)): ?>
 
         <div class="empty-state">
-            <div class="empty-icon">🏆</div>
-            <p>No hay torneos registrados</p>
+            <div class="empty-icon">👤</div>
+            <p>No hay usuarios registrados</p>
         </div>
 
     <?php else: ?>
@@ -28,48 +29,39 @@ $torneos = $controller->index();
 
                 <thead>
                     <tr>
-                        <th>Torneo</th>
-                        <th>Inicio</th>
-                        <th>Fin</th>
-                        <th>Ubicación</th>
-                        <th>País</th>
+                        <th>Usuario</th>
+                        <th>Password</th>
+                        <th>Rol</th>
+                        <th>Registro</th>
                     </tr>
                 </thead>
 
                 <tbody>
-
-                <?php foreach ($torneos as $t): ?>
+                <?php foreach ($usuarios as $u): ?>
                     <tr>
 
-                        <td class="td-title">
-                            <?= htmlspecialchars($t['nombre']) ?>
+                        <td class="td-user">
+                            <?= htmlspecialchars($u['usuario']) ?>
                         </td>
 
                         <td>
-                            <span class="badge badge-green">
-                                <?= date('d/m/Y', strtotime($t['fecha_inicio'])) ?>
+                            <span class="password-badge">
+                                ●●●●●●●●
                             </span>
                         </td>
 
                         <td>
-                            <span class="badge badge-red">
-                                <?= date('d/m/Y', strtotime($t['fecha_fin'])) ?>
+                            <span class="badge badge-role role-<?= htmlspecialchars($u['rol']) ?>">
+                                <?= htmlspecialchars($u['rol']) ?>
                             </span>
                         </td>
 
-                        <td class="td-muted">
-                            <?= htmlspecialchars($t['Ubicacion']) ?>
-                        </td>
-
-                        <td>
-                            <span class="badge badge-purple">
-                                <?= htmlspecialchars($t['Pais']) ?>
-                            </span>
+                        <td class="td-date">
+                            <?= date('d/m/Y', strtotime($u['created_at'])) ?>
                         </td>
 
                     </tr>
                 <?php endforeach; ?>
-
                 </tbody>
 
             </table>
@@ -110,7 +102,7 @@ $torneos = $controller->index();
 }
 
 /* ─────────────────────────────────────────────
-   TABLE WRAPPER (premium style unificado)
+   TABLE WRAPPER
 ───────────────────────────────────────────── */
 
 .table-wrapper {
@@ -155,20 +147,24 @@ $torneos = $controller->index();
 }
 
 /* ─────────────────────────────────────────────
-   TEXT STYLES
+   PASSWORD (IMPORTANTE UX)
 ───────────────────────────────────────────── */
 
-.td-title {
-    font-weight: 800;
-    color: var(--blanco);
-}
-
-.td-muted {
+.password-badge {
+    display: inline-block;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
     color: var(--texto);
+    font-family: monospace;
+    letter-spacing: .2em;
+    font-size: .75rem;
+    opacity: .8;
 }
 
 /* ─────────────────────────────────────────────
-   BADGES (consistente sistema global)
+   ROLE BADGES
 ───────────────────────────────────────────── */
 
 .badge {
@@ -179,22 +175,33 @@ $torneos = $controller->index();
     font-weight: 800;
 }
 
-/* fechas inicio */
-.badge-green {
+.role-admin {
+    background: rgba(245,197,24,.12);
+    color: var(--amarillo);
+}
+
+.role-arbitro {
+    background: rgba(124,92,252,.12);
+    color: var(--purpura);
+}
+
+.role-consulta {
     background: rgba(6,214,160,.12);
     color: var(--verde);
 }
 
-/* fechas fin */
-.badge-red {
-    background: rgba(255,77,109,.12);
-    color: var(--rojo);
+/* ─────────────────────────────────────────────
+   ROW DETAILS
+───────────────────────────────────────────── */
+
+.td-user {
+    font-weight: 700;
+    color: var(--blanco);
 }
 
-/* país */
-.badge-purple {
-    background: rgba(124,92,252,.12);
-    color: var(--purpura);
+.td-date {
+    color: var(--texto);
+    font-size: .8rem;
 }
 
 /* ─────────────────────────────────────────────
@@ -230,4 +237,4 @@ $torneos = $controller->index();
 
 </style>
 
-<?php include '../../includes/footer.php'; ?>
+<?php include '../../../includes/footer.php'; ?>

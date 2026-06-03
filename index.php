@@ -118,7 +118,6 @@ include INC_PATH . '/header.php';
 
 <div class="home-ctas">
     <a href="<?= APP_URL ?>/views/clasification/index.php" class="cta-btn">Ver clasificación →</a>
-    <a href="<?= APP_URL ?>/torneos.php"       class="cta-btn cta-ghost">Ver torneos</a>
 </div>
 
 <style>
@@ -126,7 +125,7 @@ include INC_PATH . '/header.php';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
 }
 @media(max-width:680px){ .home-grid{grid-template-columns:1fr;} }
 
@@ -140,6 +139,7 @@ include INC_PATH . '/header.php';
     gap: 1rem;
     justify-content: center;
     margin-top: 2.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 .cta-btn {

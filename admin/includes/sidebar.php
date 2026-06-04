@@ -29,27 +29,26 @@ $rol = Auth::getRol();
             <span class="nav-icon">◈</span> Dashboard
         </a>
 
+
+        <?php if (Auth::tieneRol([ROL_ADMIN, ROL_ARBITRO])): ?>
+
         <div class="nav-section-title">Torneos</div>
         <a href="<?= APP_URL ?>/admin/views/torneos/index.php"
            class="nav-item <?= $paginaAdmin==='torneos'?'active':'' ?>">
-            <span class="nav-icon">🏆</span> Gestionar torneos
+            <span class="nav-icon">⚙️</span> Gestionar torneos
         </a>
-        <?php if (Auth::tieneRol([ROL_ADMIN, ROL_ARBITRO])): ?>
-        <a href="<?= APP_URL ?>/views/resultado/index.php"
-           class="nav-item <?= $paginaAdmin==='resultados'?'active':'' ?>">
-            <span class="nav-icon">📊</span> Resultados
-        </a>
-        <a href="<?= APP_URL ?>/admin/inscripciones.php"
-           class="nav-item <?= $paginaAdmin==='inscripciones'?'active':'' ?>">
-            <span class="nav-icon">📋</span> Inscripciones
-        </a>
-        <?php endif; ?>
 
         <div class="nav-section-title">Jugadores</div>
         <a href="<?= APP_URL ?>/admin/views/jugadores/index.php"
            class="nav-item <?= $paginaAdmin==='jugadores'?'active':'' ?>">
             <span class="nav-icon">🪪</span> Gestionar jugadores
         </a>
+        <a href="<?= APP_URL ?>/admin/inscripciones.php"
+            class="nav-item <?= $paginaAdmin==='inscripciones'?'active':'' ?>">
+            <span class="nav-icon">📋</span> Inscripciones
+        </a>
+        <?php endif; ?>
+
 
         <div class="nav-section-title">Vista pública</div>
         <a href="<?= APP_URL ?>/views/clasification/index.php" class="nav-item" target="_blank">
@@ -60,6 +59,10 @@ $rol = Auth::getRol();
         </a>
         <a href="<?= APP_URL ?>/views/jugadores/index.php" class="nav-item" target="_blank">
             <span class="nav-icon">🎴</span> Jugadores
+        </a>
+        <a href="<?= APP_URL ?>/views/resultado/index.php"
+            class="nav-item <?= $paginaAdmin==='resultados'?'active':'' ?>">
+            <span class="nav-icon">📊</span> Resultados
         </a>
 
         <?php if (Auth::esAdmin()): ?>

@@ -130,12 +130,13 @@ a { color: inherit; text-decoration: none; }
     text-decoration: none;
 }
 
-.dashboard-btn{
+.dashboard-btn {
     display: block;
     text-align: center;
-    background: #ff4d6d;
+    background: #b4b0df;
     color: white;
     text-decoration: none;
+    margin-bottom: 8px;
 }
 /* ── Main / footer ──────────────────────────────────────── */
 main { flex: 1; }

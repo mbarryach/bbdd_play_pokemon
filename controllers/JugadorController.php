@@ -9,4 +9,8 @@ class JugadorController {
     public function index(): array {
         return $this->model->obtenerTodos();
     }
+
+    public function ultimos(int $limite = 10): array {
+    return $this->model->obtenerTodos($limite);
+    }
 }

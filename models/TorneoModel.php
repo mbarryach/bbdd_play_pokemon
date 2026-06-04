@@ -18,7 +18,7 @@ class TorneoModel {
     public function obtenerTodos(): array {
         $stmt = $this->pdo->query("
             SELECT nombre, fecha_inicio, fecha_fin, Ubicacion, Pais
-            FROM torneo
+            FROM v_torneos
             ORDER BY fecha_inicio DESC
         ");
 

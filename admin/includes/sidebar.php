@@ -30,12 +30,12 @@ $rol = Auth::getRol();
         </a>
 
         <div class="nav-section-title">Torneos</div>
-        <a href="<?= APP_URL ?>/admin/torneos.php"
+        <a href="<?= APP_URL ?>/admin/views/torneos/index.php"
            class="nav-item <?= $paginaAdmin==='torneos'?'active':'' ?>">
             <span class="nav-icon">🏆</span> Gestionar torneos
         </a>
         <?php if (Auth::tieneRol([ROL_ADMIN, ROL_ARBITRO])): ?>
-        <a href="<?= APP_URL ?>/admin/resultados.php"
+        <a href="<?= APP_URL ?>/views/resultado/index.php"
            class="nav-item <?= $paginaAdmin==='resultados'?'active':'' ?>">
             <span class="nav-icon">📊</span> Resultados
         </a>
@@ -46,25 +46,25 @@ $rol = Auth::getRol();
         <?php endif; ?>
 
         <div class="nav-section-title">Jugadores</div>
-        <a href="<?= APP_URL ?>/admin/jugadores.php"
+        <a href="<?= APP_URL ?>/admin/views/jugadores/index.php"
            class="nav-item <?= $paginaAdmin==='jugadores'?'active':'' ?>">
-            <span class="nav-icon">🎴</span> Gestionar jugadores
+            <span class="nav-icon">🪪</span> Gestionar jugadores
         </a>
 
         <div class="nav-section-title">Vista pública</div>
-        <a href="<?= APP_URL ?>/clasificacion.php" class="nav-item" target="_blank">
+        <a href="<?= APP_URL ?>/views/clasification/index.php" class="nav-item" target="_blank">
             <span class="nav-icon">📈</span> Clasificación
         </a>
-        <a href="<?= APP_URL ?>/torneos.php" class="nav-item" target="_blank">
+        <a href="<?= APP_URL ?>/views/torneos/index.php" class="nav-item" target="_blank">
             <span class="nav-icon">🏆</span> Torneos
         </a>
-        <a href="<?= APP_URL ?>/jugadores.php" class="nav-item" target="_blank">
+        <a href="<?= APP_URL ?>/views/jugadores/index.php" class="nav-item" target="_blank">
             <span class="nav-icon">🎴</span> Jugadores
         </a>
 
         <?php if (Auth::esAdmin()): ?>
         <div class="nav-section-title">Administración</div>
-        <a href="<?= APP_URL ?>/admin/usuarios.php"
+        <a href="<?= APP_URL ?>/admin/views/usuarios/index.php"
            class="nav-item <?= $paginaAdmin==='usuarios'?'active':'' ?>">
             <span class="nav-icon">👥</span> Usuarios
         </a>

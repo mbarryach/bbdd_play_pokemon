@@ -9,8 +9,6 @@
         <?= htmlspecialchars(APP_NAME) ?>
         &nbsp;·&nbsp;
         v<?= APP_VERSION ?>
-        &nbsp;·&nbsp;
-        <a href="<?= APP_URL ?>/admin/login.php">Admin ↗</a>
     </p>
 </footer>
 

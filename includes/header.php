@@ -26,10 +26,10 @@ $paginaActiva = $paginaActiva ?? '';
     <ul class="nav-links">
         <li><a href="<?= APP_URL ?>/index.php"           class="<?= $paginaActiva === 'inicio'         ? 'active' : '' ?>">Inicio</a></li>
         <li><a href="<?= APP_URL ?>/views/clasification/index.php"   class="<?= $paginaActiva === 'clasificacion'  ? 'active' : '' ?>">Clasificación</a></li>
-        <li><a href="<?= APP_URL ?>/resultados.php"      class="<?= $paginaActiva === 'resultados'     ? 'active' : '' ?>">Resultados</a></li>
+        <li><a href="<?= APP_URL ?>/views/resultado/index.php"      class="<?= $paginaActiva === 'resultados'     ? 'active' : '' ?>">Resultados</a></li>
 <!-- BOTÓN USUARIO -->
         <li class="user-menu">
-            <button class="user-btn" onclick="document.getElementById('dropdown-user').classList.toggle('show')">
+            <button style="font-family: Tahoma, sans-serif; font-size: .75rem; font-weight: 700;" class="user-btn" onclick="document.getElementById('dropdown-user').classList.toggle('show')">
                 👤 <?= htmlspecialchars(Auth::getUsuario()) ?> (<?= Auth::getLabelRol() ?>) ▾
             </button>
 
@@ -38,7 +38,8 @@ $paginaActiva = $paginaActiva ?? '';
                     <strong><?= htmlspecialchars(Auth::getUsuario()) ?></strong>
                     <span><?= Auth::getLabelRol() ?></span>
                 </div>
-
+                
+                <a href="<?= APP_URL ?>/admin/dashboard.php" class="dashboard-btn">Panel de control</a>
                 <a href="<?= APP_URL ?>/admin/logout.php" class="logout-btn">Cerrar sesión</a>
             </div>
         </li>

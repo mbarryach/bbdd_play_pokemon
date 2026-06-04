@@ -210,8 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             letter-spacing: .18em;
             cursor: pointer;
             transition: transform .15s, box-shadow .15s;
-            margin-top: .5rem;
+            margin-top: 1rem;
+            display: block;
+            text-align: center;
+            text-decoration: none;
         }
+
 
         .btn-login:hover,
         .btn-register:hover {

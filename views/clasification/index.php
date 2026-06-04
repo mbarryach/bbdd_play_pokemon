@@ -25,7 +25,7 @@ if ($torneoId > 0) {
         <form method="GET" class="form-inline">
             <label class="form-label">Torneo</label>
 
-            <select name="torneo" class="form-control select-modern" onchange="this.form.submit()">
+            <select name="torneo" class="form-control select-modern" id="select" onchange="this.form.submit()">
                 <option value="">-- Selecciona torneo --</option>
 
                 <?php foreach ($torneos as $t): ?>
@@ -267,6 +267,30 @@ if ($torneoId > 0) {
     opacity: .4;
     margin-bottom: .5rem;
 }
+
+#select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--texto);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+#select:hover {
+    border-color: var(--verde);
+}
+
+/* Focus */
+#select:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(0, 255, 120, 0.15);
+}
+
 
 /* ─────────────────────────────────────────────
    RESPONSIVE

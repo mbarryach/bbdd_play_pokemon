@@ -83,11 +83,7 @@ try {
                 <h2>¡Bienvenido, <?= htmlspecialchars(Auth::getUsuario()) ?>! <?= Auth::getIconoRol() ?></h2>
                 <p>Acceso como <strong><?= Auth::getLabelRol() ?></strong> · <?= date('d/m/Y') ?></p>
             </div>
-            <?php if (Auth::esAdmin()): ?>
-                <a href="<?= APP_URL ?>/admin/torneos.php?accion=crear" class="btn btn-primary">
-                    + Nuevo torneo
-                </a>
-            <?php endif; ?>
+
         </div>
 
         <!-- Stats -->
@@ -134,7 +130,7 @@ try {
             <a href="<?= APP_URL ?>/views/torneos/index.php"   class="action-card">
                 <span class="action-icon">🏆</span><span class="action-label">Torneos</span>
             </a>
-            <a href="<?= APP_URL ?>/views/resultados/index.php" class="action-card">
+            <a href="<?= APP_URL ?>/views/resultado/index.php" class="action-card">
                 <span class="action-icon">⚔️</span><span class="action-label">Resultados</span>
             </a>
             <?php if (Auth::tieneRol([ROL_ADMIN, ROL_ARBITRO])): ?>
@@ -142,7 +138,7 @@ try {
                 <span class="action-icon">⚙️</span><span class="action-label">Gestionar torneos</span>
             </a>
             <a href="<?= APP_URL ?>/admin/views/jugadores/index.php" class="action-card">
-                <span class="action-icon">📋</span><span class="action-label">Gestionar jugadores</span>
+                <span class="action-icon">🪪</span><span class="action-label">Gestionar jugadores</span>
             </a>
             <?php endif; ?>
             <?php if (Auth::esAdmin()): ?>
@@ -158,7 +154,7 @@ try {
             <section>
                 <div class="section-header">
                     <h3 class="section-title">Últimas partidas</h3>
-                    <a href="<?= APP_URL ?>/resultados.php" class="btn btn-ghost btn-sm">Ver todas →</a>
+                    <a href="<?= APP_URL ?>/views/resultado/index.php" class="btn btn-ghost btn-sm">Ver todas →</a>
                 </div>
                 <?php if (empty($ultimasPartidas)): ?>
                 <div class="empty-state">

@@ -55,7 +55,7 @@ include '../../../includes/header.php';
 
                 <input type="text" name="nombre" placeholder="Nombre" required>
 
-                <select name="Tipo_Torneo" required>
+                <select name="Tipo_Torneo" id="select" required>
                     <option value="">Seleccionar tipo</option>
                     <option value="Regional">Regional</option>
                     <option value="League Cup">League Cup</option>
@@ -71,7 +71,7 @@ include '../../../includes/header.php';
                 <input type="number" name="Num_Rondas_Suizas" placeholder="Rondas suizas" min="0">
                 <input type="number" name="Tamanio_Top_Cut" placeholder="Top Cut" min="0">
 
-                <select name="ID_Temporada" required>
+                <select name="ID_Temporada" id="select" required>
                     <option value="">-- Selecciona temporada --</option>
                     <?php foreach ($temporadas as $temp): ?>
                         <option value="<?= $temp['ID_Temporada'] ?>"><?= htmlspecialchars($temp['ID_Temporada']) ?></option>
@@ -178,28 +178,32 @@ include '../../../includes/header.php';
 .page-title{
     font-size:1.4rem;
     font-weight:900;
-    color:var(--blanco);
+    color:var(--texto);
 }
 
 .page-subtitle{
-    font-size:.85rem;
+    font-size:.95rem;
     color:var(--texto);
     margin-bottom:1rem;
 }
 
-.card{
-    background:linear-gradient(145deg,#0f0f1c,#0c0c18);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:1rem;
-    margin-bottom:1.5rem;
-}
+    .card{
+        background:linear-gradient(145deg,#0f0f1c,#0c0c18);
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:1rem;
+        margin-bottom:1.5rem;
+
+    }
 
 /* FORM */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
     gap:10px;
+    font-size:0.95rem;
+    font-family: Tahoma, sans-serif;
+    color:var(--texto);
 }
 
 .form-grid input,
@@ -209,6 +213,9 @@ include '../../../includes/header.php';
     border:1px solid var(--border);
     background:rgba(255,255,255,0.03);
     color:white;
+    font-size:0.95rem;
+    font-family: Tahoma, sans-serif;
+    color:var(--texto); 
 }
 
 /* BUTTONS */
@@ -278,6 +285,29 @@ include '../../../includes/header.php';
 .empty-icon{
     font-size:2.5rem;
     opacity:.4;
+}
+
+#select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--texto);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+#select:hover {
+    border-color: var(--verde);
+}
+
+/* Focus */
+#select:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(0, 255, 120, 0.15);
 }
 
 </style>

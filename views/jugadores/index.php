@@ -4,6 +4,8 @@ require_once '../../controllers/JugadorController.php';
 
 $controller = new JugadorController();
 $jugadores = $controller->index();
+$cantidad = isset($_GET['cantidad']) ? (int)$_GET['cantidad'] : 10;
+$jugadores = $controller->ultimos($cantidad);
 ?>
 
 <div class="page">
@@ -12,6 +14,16 @@ $jugadores = $controller->index();
         <h1 class="page-title">Jugadores</h1>
         <p class="page-subtitle">Listado de jugadores registrados en el sistema</p>
     </div>
+
+    <form method="GET" action="" style="margin-bottom: 1rem;">
+        <label for="cantidad"></label>
+        <select name="cantidad" id="cantidad" onchange="this.form.submit()">
+            <option value="10" <?= $cantidad == 10 ? 'selected' : '' ?>>10</option>
+            <option value="20" <?= $cantidad == 20 ? 'selected' : '' ?>>20</option>
+            <option value="50" <?= $cantidad == 50 ? 'selected' : '' ?>>50</option>
+            <option value="999" <?= $cantidad == 999 ? 'selected' : '' ?>>max.</option>
+        </select>
+    </form>
 
     <?php if (empty($jugadores)): ?>
 
@@ -200,6 +212,29 @@ $jugadores = $controller->index();
     font-size: 2.5rem;
     opacity: .4;
     margin-bottom: .5rem;
+}
+
+#cantidad {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--texto);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+#cantidad:hover {
+    border-color: var(--verde);
+}
+
+/* Focus */
+#cantidad:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(0, 255, 120, 0.15);
 }
 
 /* RESPONSIVE */

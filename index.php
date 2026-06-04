@@ -118,6 +118,7 @@ include INC_PATH . '/header.php';
 
 <div class="home-ctas">
     <a href="<?= APP_URL ?>/views/clasification/index.php" class="cta-btn">Ver clasificación →</a>
+    <a href="<?= APP_URL ?>/views/torneos/index.php" class="cta-ghost">Ver torneos →</a>
 </div>
 
 <style>
@@ -142,7 +143,7 @@ include INC_PATH . '/header.php';
     margin-bottom: 2rem;
     flex-wrap: wrap;
 }
-.cta-btn {
+.cta-btn, .cta-ghost {
     padding: .75rem 1.75rem;
     background: var(--purpura);
     color: #fff;
@@ -158,6 +159,7 @@ include INC_PATH . '/header.php';
     color: var(--texto-claro);
 }
 .cta-ghost:hover { background: rgba(255,255,255,.05); }
+
 </style>
 
 <?php include INC_PATH . '/footer.php'; ?>

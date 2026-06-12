@@ -11,6 +11,6 @@ class JugadorController {
     }
 
     public function ultimos(int $limite = 10): array {
-    return $this->model->obtenerTodos($limite);
+        return $this->model->obtenerTodos($limite);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+include '../../../includes/header.php';
 require_once '../../controllers/JugadorControllerAdmin.php';
 
 // Procesar acciones enviadas por POST
@@ -23,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
         }
     }
+
+
     // Redirigir para evitar reenvío del formulario
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
@@ -31,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Cargar lista de jugadores
 $controller = new JugadorControllerAdmin();
 $jugadores = $controller->index();
-
-include '../../../includes/header.php';
+$cantidad = isset($_GET['cantidad']) ? (int)$_GET['cantidad'] : 10;
+$jugadores = $controller->ultimos($cantidad);
 ?>
 
 <div class="page">
@@ -42,7 +45,18 @@ include '../../../includes/header.php';
         <p class="page-subtitle">Gestiona CP, torneos y sanciones</p>
     </div>
 
+    <form method="GET" action="" style="margin-bottom: 1rem;">
+        <label for="cantidad"></label>
+        <select name="cantidad" id="cantidad" onchange="this.form.submit()">
+            <option value="10" <?= $cantidad == 10 ? 'selected' : '' ?>>10</option>
+            <option value="20" <?= $cantidad == 20 ? 'selected' : '' ?>>20</option>
+            <option value="50" <?= $cantidad == 50 ? 'selected' : '' ?>>50</option>
+            <option value="999" <?= $cantidad == 999 ? 'selected' : '' ?>>max.</option>
+        </select>
+    </form>
+
     <?php if (empty($jugadores)): ?>
+
         <div class="empty-state">
             <div class="empty-icon">🎴</div>
             <p>No hay jugadores registrados</p>
@@ -126,6 +140,7 @@ include '../../../includes/header.php';
 .page-subtitle {
     font-size: .85rem;
     color: var(--texto);
+    margin-top: .25rem;
 }
 
 /* TABLE */
@@ -134,6 +149,7 @@ include '../../../includes/header.php';
     border: 1px solid var(--border);
     border-radius: 14px;
     overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,.35);
 }
 
 .data-table {
@@ -141,11 +157,16 @@ include '../../../includes/header.php';
     border-collapse: collapse;
 }
 
+.data-table thead {
+    background: rgba(255,255,255,.03);
+}
+
 .data-table th {
     padding: .9rem 1rem;
     text-align: left;
     font-size: .65rem;
     text-transform: uppercase;
+    letter-spacing: .12em;
     color: var(--texto);
 }
 
@@ -153,23 +174,46 @@ include '../../../includes/header.php';
     padding: .85rem 1rem;
     border-top: 1px solid var(--border);
     color: var(--texto-claro);
+    font-size: .85rem;
 }
 
 .data-table tbody tr:hover {
-    background: rgba(124,92,252,0.08);
+    background: rgba(124,92,252,.06);
+}
+
+.player-name {
+    font-weight: 700;
+    color: var(--blanco);
 }
 
 /* BADGES */
 .badge {
+    display: inline-flex;
     padding: .25rem .6rem;
     border-radius: 999px;
     font-size: .7rem;
     font-weight: 800;
 }
 
-.badge-purpura { background: rgba(124,92,252,0.12); color: var(--purpura); }
-.badge-amarillo { background: rgba(245,197,24,0.12); color: var(--amarillo); }
+.badge-amarillo {
+    background: rgba(245,197,24,.12);
+    color: var(--amarillo);
+}
 
+.badge-verde {
+    background: rgba(6,214,160,.12);
+    color: var(--verde);
+}
+
+.badge-rojo {
+    background: rgba(255,77,109,.12);
+    color: var(--rojo);
+}
+
+.badge-purpura {
+    background: rgba(124,92,252,.12);
+    color: var(--purpura);
+}
 /* BUTTONS */
 .btn-group {
     display: flex;
@@ -186,6 +230,7 @@ include '../../../includes/header.php';
     font-weight: 700;
     cursor: pointer;
     transition: .2s;
+    margin-bottom: .5px;
 }
 
 .btn:hover {
@@ -202,14 +247,39 @@ include '../../../includes/header.php';
 /* EMPTY */
 .empty-state {
     text-align: center;
-    padding: 3rem;
+    padding: 3rem 1rem;
     color: var(--texto);
 }
 
 .empty-icon {
     font-size: 2.5rem;
     opacity: .4;
+    margin-bottom: .5rem;
 }
+
+#cantidad {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--texto);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+#cantidad:hover {
+    border-color: var(--verde);
+}
+
+/* Focus */
+#cantidad:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(0, 255, 120, 0.15);
+}
+
 </style>
 
 <?php include '../../../includes/footer.php'; ?>

@@ -43,10 +43,7 @@ $rol = Auth::getRol();
            class="nav-item <?= $paginaAdmin==='jugadores'?'active':'' ?>">
             <span class="nav-icon">🪪</span> Gestionar jugadores
         </a>
-        <a href="<?= APP_URL ?>/admin/inscripciones.php"
-            class="nav-item <?= $paginaAdmin==='inscripciones'?'active':'' ?>">
-            <span class="nav-icon">📋</span> Inscripciones
-        </a>
+       
         <?php endif; ?>
 
 

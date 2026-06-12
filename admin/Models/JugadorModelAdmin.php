@@ -1,7 +1,6 @@
 <?php
 require_once '../../../clases/ConexionDB.php';  // ← Línea añadida
 
-
 class JugadorModelAdmin {
     private PDO $pdo;
 
@@ -9,13 +8,17 @@ class JugadorModelAdmin {
         $this->pdo = ConexionDB::getInstancia()->getConexion();
     }
     
-    public function obtenerTodos(): array {
-        $stmt = $this->pdo->query("
+    public function obtenerTodos(int $cantidad = 10): array {
+        $stmt = $this->pdo->prepare("
             SELECT ID_Jugador, nombre_completo, pais, division, 
                    cp_totales, cp_temporada_actual, torneos_jugados
             FROM v_jugadores
             ORDER BY cp_totales DESC
+            LIMIT :cantidad
         ");
+
+        $stmt->bindValue(':cantidad', $cantidad, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

@@ -11,6 +11,10 @@ class JugadorControllerAdmin {
     public function index(): array {
         return $this->model->obtenerTodos();
     }
+    
+    public function ultimos(int $limite = 10): array {
+        return $this->model->obtenerTodos($limite);
+    }
 
     // Métodos para cada acción (los llama la vista)
     public function sumarCP(int $id): bool {
@@ -23,10 +27,12 @@ class JugadorControllerAdmin {
 
     public function eliminarJugador(int $id): bool {
     return $this->model->eliminarJugador($id);
-}
+    }
 
     public function aplicarSancion(int $id): bool {
         return $this->model->aplicarSancion($id, 20);
     }
+
+
 }
 ?>
